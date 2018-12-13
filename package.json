@@ -23,10 +23,15 @@
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
     "@nestjs/websockets": "^5.5.0",
+    "@types/bip39": "^2.4.1",
+    "@types/bs58": "^3.0.30",
+    "bip39": "^2.5.0",
     "bitcoinjs-lib": "^4.0.2",
+    "bs58": "^4.0.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
+    "satoshi-bitcoin": "^1.0.4",
     "typescript": "^3.0.1"
   },
   "devDependencies": {

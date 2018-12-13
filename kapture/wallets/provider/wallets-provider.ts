@@ -14,11 +14,18 @@ export class WalletsProvider {
         this.crypto_network = new Network();
     }
 
-    private getPath(code_crypto: string, child: string, is_change = false) {
+    private getPath(code_crypto: string, child: string, is_change = false, is_address = true) {
+
         if (is_change) {
-            return 'm/44\'/' + code_crypto + '\'/1\'/' + child + '';
+            return 'm/44\'/' + code_crypto + '\'/0\'/' + '\/1\'/' + child + '';
         } else {
-            return 'm/44\'/' + code_crypto + '\'/0\'/' + child + '';
+            if (is_address) {
+                console.log('m/44\'/' + code_crypto + '\'/0\'' + '/0/' + child + '');
+                return 'm/44\'/' + code_crypto + '\'/0\'' + '/0/' + child + '';
+            } else {
+                console.log('no es');
+                return 'm/44\'/' + code_crypto + '\'/' + child + '\'';
+            }
         }
     }
 
@@ -37,7 +44,7 @@ export class WalletsProvider {
         const xprvString = master.toBase58();
 
         const xpubString = fromBase58(xprvString, this.crypto_network.getNetworkParams(crypto)).derivePath(
-            this.getPath(this.crypto_network.getCodeCrypto(),'0')
+            this.getPath(this.crypto_network.getCodeCrypto(),'0', false, false)
             ).neutered().toBase58();
 
         return {
@@ -51,7 +58,7 @@ export class WalletsProvider {
 
     public getPaymentAddress(xpriv: any, crypto: string, child: string, is_change = false) {
         const x = xpriv.derivePath( this.getPath(
-            this.crypto_network.getCodeCrypto(), '0', is_change)
+            this.crypto_network.getCodeCrypto(), '0', is_change),
         );
         const network = this.crypto_network.getNetworkParams(crypto);
 

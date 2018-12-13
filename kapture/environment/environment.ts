@@ -1,3 +1,3 @@
 export const environment = {
-    testnet: false ,
+    testnet: false,
 };

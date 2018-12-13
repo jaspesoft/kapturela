@@ -13,7 +13,7 @@ export class Network {
         this.testnet = environment.testnet;
     }
     public getCodeCrypto() {
-        return this.code;
+        return this.code + '';
     }
     public getNetworkParams(symbol: string): any {
 
@@ -22,20 +22,20 @@ export class Network {
                 if (this.testnet) {
                     this.code = 1;
                     networks.testnet.messagePrefix = '\x19kapturela Signed Message:\n';
-                    networks.testnet.bip32.private = 0x049d7878;
-                    networks.testnet.bip32.public = 0x049d7cb2;
-                    networks.testnet.pubKeyHash = 0x4B;
-                    networks.testnet.scriptHash = 0x05;
-                    networks.testnet.wif = 0x80;
+                    networks.testnet.bip32.private = 0x043587cf;
+                    networks.testnet.bip32.public = 0x04358394;
+                    networks.testnet.pubKeyHash = 0x6f;
+                    networks.testnet.scriptHash = 0xc4;
+                    networks.testnet.wif = 0xef;
 
                 } else {
                     this.code = 174;
                     networks.bitcoin.messagePrefix = '\x19kapturela Signed Message:\n';
-                    networks.bitcoin.bip32.private = 0x04358394;
-                    networks.bitcoin.bip32.public = 0x043587cf;
-                    networks.bitcoin.pubKeyHash = 0x6f;
-                    networks.bitcoin.scriptHash = 0xc4;
-                    networks.bitcoin.wif = 0xef;
+                    networks.bitcoin.bip32.private = 0x049d7878;
+                    networks.bitcoin.bip32.public = 0x049d7cb2;
+                    networks.bitcoin.pubKeyHash = 0x4B;
+                    networks.bitcoin.scriptHash = 0x05;
+                    networks.bitcoin.wif = 0x80;
                 }
                 break;
 

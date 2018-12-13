@@ -76,6 +76,13 @@
   resolved "https://registry.yarnpkg.com/@types/base-x/-/base-x-1.0.29.tgz#8a2d73e4a5c3121757a5f8870cfa4509655186b6"
   integrity sha1-ii1z5KXDEhdXpfiHDPpFCWVRhrY=
 
+"@types/bip32@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/bip32/-/bip32-1.0.0.tgz#792b26521267effbee4cb048f3425d114ad1e4f8"
+  integrity sha512-BXLhOIsl6vzm+OOHmb5aHMs/eCt3xY7sO9xDfMtNoQl5UyrUMR+QREFLZ1zDl0jt0mkFBhhp5mtEefUOQDTuRA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/bip39@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@types/bip39/-/bip39-2.4.1.tgz#1a47b453b59a50d7b5856819b834c74798915eb3"
@@ -672,7 +679,7 @@ bindings@^1.3.0:
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.3.1.tgz#21fc7c6d67c18516ec5aaa2815b145ff77b26ea5"
   integrity sha512-i47mqjF9UbjxJhxGf+pZ6kSxrnI3wBLlnGI2ArWJ4r0VrvDS7ZYXkprq/pLaBWYq4GM0r4zdHY+NNRqEMU7uew==
 
-bip32@^1.0.0:
+bip32@^1.0.0, bip32@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bip32/-/bip32-1.0.2.tgz#982e2ad2cae6fc6a2f53dda3e6c3be9364674b28"
   integrity sha512-kedLYj8yvYzND+EfzeoMSlGiN7ImiRBF/MClJSZPkMfcU+OQO7ZpL5L/Yg+TunebBZIHhunstiQF//KLKSF5rg==

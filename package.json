@@ -1,13 +1,13 @@
 {
   "name": "kapturela",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Procesador de pago",
   "author": "Angel Bejarano",
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "format": "prettier --write \"kapture/**/*.ts\"",
+    "start": "ts-node -r tsconfig-paths/register kapture/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && tsc",
@@ -22,6 +22,7 @@
   "dependencies": {
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
+    "@nestjs/websockets": "^5.5.0",
     "@types/bip39": "^2.4.1",
     "@types/bitcoinjs-lib": "^4.0.0",
     "@types/bs58": "^3.0.30",
@@ -52,7 +53,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "kapture",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

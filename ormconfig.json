@@ -4,6 +4,6 @@
     "database": "jaspedb",
     "synchronize": true,
     "entities": [
-      "kapture/**/**.entity{.ts,.js}"
+      "kapture/apps/**/**.entity{.ts,.js}"
     ]
   }

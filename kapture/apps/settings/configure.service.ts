@@ -13,11 +13,18 @@ export class SettingsService {
     const newUser = new this.userModel(user);
     try {
       await newUser.validate();
-      return await newUser.save();
+      await newUser.save();
+      return this.setCreateAccount(user);
+
     } catch (err) {
       return err.errors;
     }
   }
+
+  private setCreateAccount(user: adm_user): adm_user {
+    return user;
+  }
+
   async countries(): Promise<adm_country[]> {
     return this.countryModel.find().exec();
   }

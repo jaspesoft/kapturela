@@ -18,3 +18,16 @@ export interface adm_user extends Document {
   readonly is_active: boolean;
   readonly date_joined: Date;
 }
+
+// tslint:disable-next-line:class-name
+export interface adm_state extends Document {
+    readonly name_state: string;
+    readonly country: string;
+}
+
+// tslint:disable-next-line:class-name
+export interface adm_city extends Document {
+    readonly name_city: string;
+    readonly country: string;
+    readonly state: string;
+}

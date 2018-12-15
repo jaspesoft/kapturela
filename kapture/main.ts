@@ -7,10 +7,5 @@ async function bootstrap() {
   app.useWebSocketAdapter(new WsAdapter(app));
   await app.listen(3000);
 
-  /*
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-  */
-
 }
 bootstrap();

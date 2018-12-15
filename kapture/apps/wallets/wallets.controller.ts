@@ -1,10 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { WalletsProvider } from './provider/wallets-provider';
+import { Wallets } from './providers/wallets';
 
-@Controller('wallets')
+@Controller('api/v1/wallets')
 export class WalletsController {
 
-    constructor(private wallet: WalletsProvider) { }
+    constructor(private wallet: Wallets) { }
 
     @Get()
     public create() {

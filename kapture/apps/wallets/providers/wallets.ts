@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
 import {  generateMnemonic, mnemonicToSeed  } from 'bip39';
-import { Network } from 'kapture/shared/provider/network';
+import { Network } from 'kapture/shared/provider/wallets/network';
 import { fromSeed, fromBase58 } from 'bip32';
 import { payments } from 'bitcoinjs-lib';
 
 @Injectable()
-export class WalletsProvider {
+export class Wallets {
     // tslint:disable-next-line:variable-name
     private crypto_network;
 
@@ -20,10 +20,8 @@ export class WalletsProvider {
             return 'm/44\'/' + code_crypto + '\'/0\'/' + '\/1\'/' + child + '';
         } else {
             if (is_address) {
-                console.log('m/44\'/' + code_crypto + '\'/0\'' + '/0/' + child + '');
                 return 'm/44\'/' + code_crypto + '\'/0\'' + '/0/' + child + '';
             } else {
-                console.log('no es');
                 return 'm/44\'/' + code_crypto + '\'/' + child + '\'';
             }
         }
@@ -34,11 +32,8 @@ export class WalletsProvider {
     }
 
     public setGenerateAccount(crypto: string) {
-        //const seed = generateMnemonic();
+        const seed = generateMnemonic();
 
-        const seed = 'toddler above spend fat ketchup actual winter pupil relax real humor admit';
-
-        //const master = this.getSeed(seed, crypto);
         const master = this.getSeed(seed, crypto);
 
         const xprvString = master.toBase58();

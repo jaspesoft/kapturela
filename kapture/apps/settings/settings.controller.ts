@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Req, Body, UsePipes, Res, HttpStatus } from '@nestjs/common';
-import { SettingsService } from './models/configure.service';
+import { SettingsService } from './configure.service';
 import { adm_country, adm_user } from './models/settings.interface';
 
 @Controller('api/v1/settings')

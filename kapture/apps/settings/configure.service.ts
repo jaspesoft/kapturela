@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { adm_country, adm_user } from './settings.interface';
+import { adm_country, adm_user } from './models/settings.interface';
 
 @Injectable()
 export class SettingsService {

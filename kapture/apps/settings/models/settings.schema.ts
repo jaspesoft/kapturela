@@ -16,9 +16,9 @@ export const CountryShema = new mongoose.Schema(joigoose.convert(joiCountryShema
 /* adm_users */
 const joiUserSchema = Joi.object({
     username: Joi.string().required(),
-    first_name: Joi.string().required(),
-    last_name: Joi.string(),
-    email: Joi.string().email().required(),
+    first_name: Joi.string().uppercase().required(),
+    last_name: Joi.string().uppercase(),
+    email: Joi.string().lowercase().email().required(),
     dni: Joi.number().required(),
     code_restore_password: Joi.string(),
     country: Joi.string().max(3).required(),

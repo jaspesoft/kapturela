@@ -1,9 +1,0 @@
-{
-    "type": "mongodb",
-    "host": "localhost",
-    "database": "jaspedb",
-    "synchronize": true,
-    "entities": [
-      "kapture/apps/**/**.entity{.ts,.js}"
-    ]
-  }

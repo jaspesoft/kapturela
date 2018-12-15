@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Network } from './shared/provider/network';
+import { Network } from './shared/provider/wallets/network';
 
 @Controller()
 export class AppController {

@@ -2,9 +2,8 @@ import * as mongoose from 'mongoose';
 import Joigoose = require('joigoose');
 import * as Joi from 'joi';
 
-let joigoose = Joigoose(mongoose);
 const options: Joi.ValidationOptions = {abortEarly: true};
-joigoose = Joigoose(mongoose, options);
+const joigoose = Joigoose(mongoose, options);
 
 /* wal_accounts */
 const joiAccountSchema = Joi.object({

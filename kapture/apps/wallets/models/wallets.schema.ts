@@ -10,6 +10,7 @@ const joiAccountSchema = Joi.object({
     account: Joi.string().guid().required(),
     seed: Joi.string().required(),
     created_at: Joi.date().default(Date.now()),
+    user: Joi.string().alphanum().required(),
 });
 export const AccountSchema = new mongoose.Schema(joigoose.convert(joiAccountSchema));
 

@@ -36,7 +36,7 @@ export const walletsProviders = [
     },
     {
         provide: 'WithdrawalRequestModel',
-        useFactory: (connection: Connection) => connection.model('wal_unspent_address', WithdrawalRequestSchema),
+        useFactory: (connection: Connection) => connection.model('wal_withdrawal_request', WithdrawalRequestSchema),
         inject: ['DataBaseConnection'],
     },
 ];

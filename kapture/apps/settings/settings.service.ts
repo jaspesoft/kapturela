@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { adm_country, adm_user } from './models/settings.interface';
 import { wal_accounts } from '../wallets/models/wallets.interface';
 import { Wallets } from 'kapture/shared/provider/wallets/wallets';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SettingsService {
@@ -11,26 +12,21 @@ export class SettingsService {
     @Inject('CountryModel') private readonly countryModel: Model<adm_country>,
     @Inject('AccountModel') private readonly accountModel: Model<wal_accounts>,
     @Inject('MailerProvider') private readonly mailerProvider,
-  ) {}
+  ) { }
 
-  async create(user: adm_user): Promise<any> {
+  async create(user: adm_user): Promise<adm_user> {
     const newUser = new this.userModel(user);
-    try {
-      await newUser.validate();
-      await newUser.save( (err, result) => {
-        if (err !== null) {
-          return err;
-        }
-        this.setCreateAccount({
-          id: result.id,
-          email: user.email,
-          name: user.first_name,
-        });
+    await newUser.validate();
+    return await newUser.save((err, result) => {
+      if (err !== null) {
+        return err;
+      }
+      this.setCreateAccount({
+        id: result.id,
+        email: user.email,
+        name: user.first_name,
       });
-
-    } catch (err) {
-      return err.errors;
-    }
+    });
   }
   public getRandom(length: number): string {
     let result: string;
@@ -41,7 +37,7 @@ export class SettingsService {
     }
     return result.replace('undefined', '');
   }
-  private async setCreateAccount(user: any): Promise<any> {
+  private async setCreateAccount(user: any): Promise<wal_accounts> {
     const isNow = Date.now();
     const newAccount = new this.accountModel({
       seed: Wallets.getEncrypt(Wallets.getCreateMnemonic() + isNow),
@@ -49,9 +45,9 @@ export class SettingsService {
       created_at: isNow,
     });
     await newAccount.validate();
-    await newAccount.save( (err, result) => {
+    return await newAccount.save((err, result) => {
       if (err !== null) {
-        throw err;
+        return err;
       }
       this.mailerProvider.sendMail(
         {
@@ -64,11 +60,32 @@ export class SettingsService {
           },
         },
       );
-
     });
   }
 
   async countries(): Promise<adm_country[]> {
     return this.countryModel.find().exec();
+  }
+
+  async validarUser(userEmail: string, userName: string): Promise<any> {
+    let x = await this.userModel.find({ username: userName }).exec();
+    if (x.length > 0) {
+      return {
+        message: 'username is already registered',
+        status: 'faild',
+      };
+    }
+
+    x = await this.userModel.find({ email: userEmail }).exec();
+    if (x.length > 0) {
+      return {
+        message: 'email is already registered',
+        status: 'faild',
+      };
+    } else {
+      return {
+        status: 'ok',
+      };
+    }
   }
 }

@@ -8,17 +8,25 @@ export class SettingsController {
     constructor(private service: SettingsService) { }
 
     @Post('create/account/')
-    async createAccount(@Body() user: adm_user) {
-        return this.service.create(user);
-        /*const resp = this.service.create(user).catch(error);
-
-        if (resp === true) {
-            res.status(HttpStatus.CREATED).json({
-                'message': 'Welcome has been successfully registered. An email was sent with the account activation code.',
+    async createAccount(@Body() user: adm_user, @Res() res) {
+        // validar que el usaurio no este registrado
+        this.service.validarUser(user.email, user.username)
+        .then(result => {
+            if (result.status === 'faild') {
+                return res.status(HttpStatus.OK).json({
+                    message: result.message,
+                });
+            }
+            this.service.create(user)
+            .then(() => {
+                res.status(HttpStatus.CREATED).json({
+                    message: 'Welcome has been successfully registered. An email was sent with the account activation code.',
+                });
+            })
+            .catch(error => {
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
             });
-        } else {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(res);
-        }*/
+        });
 
     }
 

@@ -4,6 +4,8 @@ import {  generateMnemonic, mnemonicToSeed  } from 'bip39';
 import { Network } from 'kapture/shared/provider/wallets/network';
 import { fromSeed, fromBase58 } from 'bip32';
 import { payments } from 'bitcoinjs-lib';
+import { environment } from 'kapture/environment/environment';
+import { Base64 } from 'js-base64';
 
 @Injectable()
 export class Wallets {
@@ -12,6 +14,10 @@ export class Wallets {
 
     constructor() {
         this.crypto_network = new Network();
+    }
+
+    public static getCreateMnemonic(): string {
+        return Wallets.getEncrypt(generateMnemonic());
     }
 
     private getPath(code_crypto: string, child: string, is_change = false, is_address = true) {
@@ -30,11 +36,23 @@ export class Wallets {
     private getSeed(nemonic: string, crypto: string) {
         return fromSeed(mnemonicToSeed(nemonic), this.crypto_network.getNetworkParams(crypto));
     }
+    public static getEncrypt(va: string): string {
+        let encrypt = va;
+        for (let I = 0; I < environment.nro; I++) {
+            encrypt = Base64.encode(encrypt + environment.seed);
+        }
+        return encrypt;
+    }
+    public static getDescrypt(va: string): string {
+        let descrypt = va;
+        for (let I = 0; I < environment.nro; I++) {
+            descrypt = Base64.decode(descrypt).replace(environment.seed, '');
+        }
+        return descrypt;
+    }
 
-    public setGenerateAccount(crypto: string) {
-        const seed = generateMnemonic();
-
-        const master = this.getSeed(seed, crypto);
+    public setCreateWallet(crypto: string, mnemonic: string) {
+        const master = this.getSeed(mnemonic, crypto);
 
         const xprvString = master.toBase58();
 
@@ -43,7 +61,6 @@ export class Wallets {
             ).neutered().toBase58();
 
         return {
-            'seed': seed,
             'xpriv': xprvString,
             'xpub': xpubString,
             'child': 0,

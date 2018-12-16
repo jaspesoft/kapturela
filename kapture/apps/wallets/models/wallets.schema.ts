@@ -7,9 +7,9 @@ const joigoose = Joigoose(mongoose, options);
 
 /* wal_accounts */
 const joiAccountSchema = Joi.object({
-    account: Joi.string().guid().required(),
     seed: Joi.string().required(),
-    created_at: Joi.date().default(Date.now()),
+    created_at: Joi.date().required(),
+    user: Joi.string().alphanum().required(),
 });
 export const AccountSchema = new mongoose.Schema(joigoose.convert(joiAccountSchema));
 

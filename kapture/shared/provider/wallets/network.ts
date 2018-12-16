@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { environment } from 'kapture/environment/environment';
 import { networks } from 'bitcoinjs-lib';
 
-
 @Injectable()
 export class Network {
 

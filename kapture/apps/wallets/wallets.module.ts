@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { WalletsController } from './wallets.controller';
-import { Wallets } from './providers/wallets';
-import {WalletsService} from '../../shared/services/wallets/wallets.service';
+import { walletsProviders } from './providers/wallets.providers';
+import { DatabaseModule } from 'kapture/database/database.module';
 
 @Module({
   controllers: [WalletsController],
-  imports: [],
+  imports: [DatabaseModule],
   providers: [
-      Wallets,
-      WalletsService,
+    ...walletsProviders,
+  ],
+  exports: [
+    ...walletsProviders,
   ],
 })
 export class WalletsModule {}

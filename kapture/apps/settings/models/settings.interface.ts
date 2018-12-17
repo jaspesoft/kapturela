@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { string } from 'joi';
 
 // tslint:disable-next-line:class-name
 export interface adm_country extends Document {
@@ -14,9 +15,10 @@ export interface adm_user extends Document {
   readonly username: string;
   readonly first_name: string;
   readonly last_name: string;
-  readonly password: string;
+  password: string;
   readonly is_active: boolean;
   readonly date_joined: Date;
+  readonly token: string;
 }
 
 // tslint:disable-next-line:class-name

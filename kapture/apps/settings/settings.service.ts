@@ -3,19 +3,28 @@ import { Model } from 'mongoose';
 import { adm_country, adm_user } from './models/settings.interface';
 import { wal_accounts } from '../wallets/models/wallets.interface';
 import { Wallets } from 'kapture/shared/provider/wallets/wallets';
-import { Observable } from 'rxjs';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class SettingsService {
   constructor(
-    @Inject('UserModel') private readonly userModel: Model<adm_user>,
+    @Inject('UserModel') public readonly userModel: Model<adm_user>,
     @Inject('CountryModel') private readonly countryModel: Model<adm_country>,
     @Inject('AccountModel') private readonly accountModel: Model<wal_accounts>,
     @Inject('MailerProvider') private readonly mailerProvider,
   ) { }
-
-  async create(user: adm_user): Promise<adm_user> {
+  async validateUserToken(tokenValidate: string): Promise<any> {
+    return this.userModel.find({token: tokenValidate });
+  }
+  public async makePassword(pass: string): Promise<string> {
+    return crypto.createHmac('sha256', pass).digest('hex');
+  }
+  async setCreateUser(user: adm_user): Promise<adm_user> {
     const newUser = new this.userModel(user);
+    await this.makePassword(user.password)
+    .then( passEncrypt => {
+      newUser.password = passEncrypt;
+    });
     await newUser.validate();
     return await newUser.save((err, result) => {
       if (err !== null) {
@@ -67,7 +76,7 @@ export class SettingsService {
     return this.countryModel.find().exec();
   }
 
-  async validarUser(userEmail: string, userName: string): Promise<any> {
+  async validarCreateUser(userEmail: string, userName: string): Promise<any> {
     let x = await this.userModel.find({ username: userName }).exec();
     if (x.length > 0) {
       return {

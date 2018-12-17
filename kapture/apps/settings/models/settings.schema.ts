@@ -24,6 +24,7 @@ const joiUserSchema = Joi.object({
     password: Joi.string().required().min(8).max(150),
     date_joined: Joi.date().default(Date.now()),
     is_active: Joi.boolean().default(false),
+    token: Joi.string(),
 });
 export const UserShema = new mongoose.Schema(joigoose.convert(joiUserSchema));
 

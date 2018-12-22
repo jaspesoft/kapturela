@@ -6,7 +6,7 @@ import {
     TransactionSchema,
     UnspentAddressSchema,
     WithdrawalRequestSchema,
-} from '../models/wallets.schema';
+} from './wallets.schema';
 
 export const walletsProviders = [
     {

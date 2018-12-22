@@ -65,7 +65,7 @@ const joiWithdrawalRequestSchema = Joi.object({
     coin: Joi.string().required(),
     amount: Joi.number().positive().required(),
     address: Joi.string().required(),
-    validation_code: Joi.string().required(),
+    validation_code: Joi.string(),
     concept: Joi.string().required(),
     status: Joi.string().max(1).default('P').required(),
     created_at: Joi.date().default(Date.now()),

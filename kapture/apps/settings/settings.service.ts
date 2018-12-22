@@ -4,9 +4,12 @@ import { adm_country, adm_user } from './models/settings.interface';
 import { wal_accounts } from '../wallets/models/wallets.interface';
 import { Wallets } from 'kapture/shared/provider/wallets/wallets';
 import * as crypto from 'crypto';
+import {GeneralService} from '../../shared/services/general.service';
 
 @Injectable()
 export class SettingsService {
+  private _functions: GeneralService;
+
   constructor(
     @Inject('UserModel') public readonly userModel: Model<adm_user>,
     @Inject('CountryModel') private readonly countryModel: Model<adm_country>,
@@ -37,15 +40,7 @@ export class SettingsService {
       });
     });
   }
-  public getRandom(length: number): string {
-    let result: string;
-    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    for (let i = length; i > 0; --i) {
-      result = result + chars[Math.floor(Math.random() * chars.length)];
-    }
-    return result.replace('undefined', '');
-  }
   private async setCreateAccount(user: any): Promise<wal_accounts> {
     const isNow = Date.now();
     const newAccount = new this.accountModel({
@@ -64,8 +59,8 @@ export class SettingsService {
           subject: 'Welcome to Kapture',
           template: 'welcome',
           context: {
-            username: user.first_name,
-            code: this.getRandom(6),
+            username: user.username,
+            code: this._functions.getRandom(6),
           },
         },
       );

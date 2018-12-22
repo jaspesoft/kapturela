@@ -62,9 +62,11 @@ export const UnspentAddressSchema = new mongoose.Schema(joigoose.convert(joiUnsp
 
 /* wal_withdrawal_request */
 const joiWithdrawalRequestSchema = Joi.object({
+    coin: Joi.string().required(),
     amount: Joi.number().positive().required(),
     address: Joi.string().required(),
     validation_code: Joi.string().required(),
+    concept: Joi.string().required(),
     status: Joi.string().max(1).default('P').required(),
     created_at: Joi.date().default(Date.now()),
     expires_at: Joi.date(),

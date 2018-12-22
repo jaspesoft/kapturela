@@ -1,9 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { SettingsService } from '../settings/settings.service';
 import { AuthLogIn } from './auth.interface';
+import {GeneralService} from '../../shared/services/general.service';
 
 @Injectable()
 export class AuthService {
+  private _functions: GeneralService;
   constructor(private readonly usersService: SettingsService) {}
 
   async validateTokeApps(token: string): Promise<any> {
@@ -12,7 +14,7 @@ export class AuthService {
     return await this.usersService.validateUserToken(token);
   }
   private async createTokenUser(emailUser: string): Promise<string> {
-    const newToken = this.usersService.getRandom(40);
+    const newToken = this._functions.getRandom(40);
 
     const data = await this.usersService.userModel.findOneAndUpdate(
       {email: emailUser },

@@ -5,7 +5,7 @@ import { HttpStrategy } from './http.strategy';
 import { SettingsModule } from 'dist/kapture/apps/settings/settings.module';
 import { SettingsService } from '../settings/settings.service';
 import { settingsProviders } from '../settings/models/settings.providers';
-import { walletsProviders } from '../wallets/providers/wallets.providers';
+import { walletsProviders } from '../wallets/models/wallets.providers';
 import { AuthController } from './auth.controller';
 
 @Module({

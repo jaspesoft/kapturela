@@ -8,6 +8,7 @@ import { WalletsModule } from './apps/wallets/wallets.module';
 import { SettingsModule } from './apps/settings/settings.module';
 import { CoinsModule } from './apps/coins/coins.module';
 import { AuthModule } from './apps/auth/auth.module';
+import { GeneralService } from './shared/services/general.service';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { AuthModule } from './apps/auth/auth.module';
       AppService,
       Network,
       Wallets,
+      GeneralService,
   ],
 })
 export class AppModule { }

@@ -20,14 +20,23 @@ export class WalletsController {
             if (result.status === 'faild') {
                 return res.status(HttpStatus.EXPECTATION_FAILED).json(result);
             }
-            this.service.setCreateWallet(createWallet, params.coin)
-            .then(resul => {
-                if (result.status === 'faild') {
-                    return res.status(HttpStatus.EXPECTATION_FAILED).json(resul);
+            // validar que la cuenta no tenga una billetera creada para la crypto correspondiente
+            this.service.validateExistsWallet(createWallet, params.coin)
+            .then(response => {
+                if (response.state === 'faild') {
+                    return res.status(HttpStatus.EXPECTATION_FAILED).json(response);
                 }
-                return res.status(HttpStatus.OK).json(resul);
+                this.service.setCreateWallet(createWallet, params.coin)
+                .then(resul => {
+                    if (result.status === 'faild') {
+                        return res.status(HttpStatus.EXPECTATION_FAILED).json(resul);
+                    }
+                    return res.status(HttpStatus.OK).json({
+                        message: 'The wallet was created successfully, we invite you to make a deposit',
+                        state : 'ok',
+                    });
+                });
             });
-
         });
     }
 
@@ -62,9 +71,9 @@ export class WalletsController {
 
     }
 
-    @Post('withdrawal/execute/')
+    /*/@Post('withdrawal/execute/')
+    @UseGuards(AuthGuard('bearer'))
     async withdrawalExecute() {
 
-    }
-
+    }*/
 }

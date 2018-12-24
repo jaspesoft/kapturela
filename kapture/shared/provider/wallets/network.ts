@@ -11,6 +11,9 @@ export class Network {
     constructor() {
         this.testnet = environment.testnet;
     }
+    public getTypeNetwork() {
+        return this.testnet;
+    }
     public getCodeCrypto() {
         return this.code + '';
     }

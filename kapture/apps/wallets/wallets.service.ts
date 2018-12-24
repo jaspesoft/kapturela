@@ -67,7 +67,26 @@ export class WalletsService {
             };
         }
     }
+    async validateExistsWallet(data: wal_wallets, symbol: string): Promise<any> {
+        // tslint:disable-next-line:variable-name
+        const data_wallet = await this.walletModel.find(
+            {
+                coin: symbol,
+                account: data.account,
+                testnet: this.walletProvider.crypto_network.getTypeNetwork()
+            });
 
+        if (data_wallet.length > 0 ) {
+            return {
+                message: 'The account number already has a bielletera for the cryptocurrency ' + symbol,
+                state: 'faild',
+            };
+        } else {
+            return {
+                state: 'ok',
+            };
+        }
+    }
     async setCreateWallet(data: wal_wallets, symbol: string): Promise<any> {
         // buscar la cuenta para tener los seed's
         // tslint:disable-next-line:variable-name
@@ -92,13 +111,13 @@ export class WalletsService {
         const seed = Wallets.getDescrypt(data_account.seed) + data_account.created_at;
         const wallet = this.walletProvider.setCreateWallet(symbol, seed);
 
-        /*const newWallet = new this.walletModel(data);
+        const newWallet = new this.walletModel({
+            account: data.account,
+            coin: symbol,
+            address: wallet.address,
+            testnet: wallet.testnet,
+        });
         await newWallet.validate();
-        return newWallet.save((err, result) => {
-            if (err !== null) {
-                return err;
-            }
-        });*/
-        return wallet;
+        return newWallet.save();
     }
 }

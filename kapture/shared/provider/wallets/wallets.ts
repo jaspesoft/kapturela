@@ -9,12 +9,8 @@ import { Base64 } from 'js-base64';
 
 @Injectable()
 export class Wallets {
-    // tslint:disable-next-line:variable-name
-    private crypto_network;
 
-    constructor() {
-        this.crypto_network = new Network();
-    }
+    constructor(public crypto_network: Network) { }
 
     public static getCreateMnemonic(): string {
         return Wallets.getEncrypt(generateMnemonic());
@@ -66,6 +62,7 @@ export class Wallets {
             xpub: xpubString,
             child: 0,
             address: this.getPaymentAddress(master, crypto, '0'),
+            testnet: this.crypto_network.getTypeNetwork(),
         };
     }
 

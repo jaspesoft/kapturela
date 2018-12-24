@@ -6,6 +6,7 @@ import { WalletsService } from './wallets.service';
 import {coinsProviders} from '../coins/models/coins.providers';
 import { settingsProviders } from '../settings/models/settings.providers';
 import { Wallets } from 'kapture/shared/provider/wallets/wallets';
+import { Network } from 'kapture/shared/provider/wallets/network';
 
 @Module({
   controllers: [WalletsController],
@@ -18,6 +19,7 @@ import { Wallets } from 'kapture/shared/provider/wallets/wallets';
       ...coinsProviders,
       ...settingsProviders,
       Wallets,
+      Network,
   ],
 })
 export class WalletsModule {}

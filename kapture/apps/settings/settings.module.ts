@@ -12,6 +12,6 @@ import { walletsProviders } from '../wallets/models/wallets.providers';
     SettingsService,
     ...settingsProviders,
     ...walletsProviders,
-  ]
+  ],
 })
 export class SettingsModule {}

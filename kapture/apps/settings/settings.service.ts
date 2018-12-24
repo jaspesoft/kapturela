@@ -36,6 +36,7 @@ export class SettingsService {
         id: result.id,
         email: user.email,
         name: user.first_name,
+        username: user.username,
       });
     });
   }

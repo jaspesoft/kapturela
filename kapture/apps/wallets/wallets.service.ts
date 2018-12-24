@@ -3,37 +3,58 @@ import {wal_withdrawal_request} from './models/wallets.interface';
 import { Model } from 'mongoose';
 import {GeneralService} from '../../shared/services/general.service';
 import {cy_coins} from '../coins/models/coins.interface';
+import { adm_user } from '../settings/models/settings.interface';
 
 @Injectable()
 export class WalletsService {
-    private _functions: GeneralService;
+    // tslint:disable-next-line:variable-name
+    private _functions = new GeneralService();
+
     constructor(
         @Inject('WithdrawalRequestModel') private readonly withdrawalRequestModel: Model<wal_withdrawal_request>,
         @Inject('CoinsModel') private readonly coinModel: Model<cy_coins>,
+        @Inject('MailerProvider') private readonly mailerProvider,
     ) { }
-    async setSaveWithdrawalRequest(data: wal_withdrawal_request, coin: string): Promise<wal_withdrawal_request> {
-        let date_expire: Date;
-        date_expire = new Date();
+    // tslint:disable-next-line:variable-name
+    async setSaveWithdrawalRequest(data: wal_withdrawal_request, coin: string, data_user: adm_user): Promise<any> {
+        // tslint:disable-next-line:variable-name
+        const date_expire = new Date();
         date_expire.setMinutes(date_expire.getMinutes() + 15);
 
-
-        let withdrawal = new this.withdrawalRequestModel(data);
-        withdrawal.validation_code = this._functions.getRandom(6);
+        const withdrawal = new this.withdrawalRequestModel(data);
+        const codeRandom = this._functions.getRandom(6);
+        withdrawal.validation_code = codeRandom;
         withdrawal.expires_at = date_expire;
         withdrawal.coin = coin;
 
         await withdrawal.validate();
 
-        return withdrawal.save();
+        return withdrawal.save((err, result) => {
+            if (err !== null) {
+                return err;
+            }
+            this.mailerProvider.sendMail(
+                {
+                    to: data_user.email,
+                    subject: 'Withdrawal request to Kapture',
+                    template: 'request_withdrawal',
+                    context: {
+                        username: data_user.username,
+                        code: codeRandom,
+                        amount: data.amount,
+                        symbol: coin,
+                    },
+                },
+              );
+        });
     }
 
     async getValidateCoin(coin: string): Promise<any> {
         const data = await this.coinModel.find({symbol: coin });
-        console.log(data);
         if (data.length > 0) {
             return {
                 status: 'ok',
-            }
+            };
 
         } else {
             return {

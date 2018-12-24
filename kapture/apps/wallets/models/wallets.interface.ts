@@ -11,7 +11,8 @@ export interface wal_withdrawal_request extends Document {
     readonly amount: number;
     readonly address: string;
     readonly concept: string;
-    coin: string,
+    readonly user_id: string;
+    coin: string;
     validation_code: string;
     expires_at: Date;
 }

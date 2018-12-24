@@ -69,6 +69,7 @@ const joiWithdrawalRequestSchema = Joi.object({
     concept: Joi.string().required(),
     status: Joi.string().max(1).default('P').required(),
     created_at: Joi.date().default(Date.now()),
+    user_id: Joi.string().required(),
     expires_at: Joi.date(),
 });
 export const WithdrawalRequestSchema = new mongoose.Schema(joigoose.convert(joiWithdrawalRequestSchema));

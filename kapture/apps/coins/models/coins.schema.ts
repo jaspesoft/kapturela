@@ -8,7 +8,7 @@ const joigoose = Joigoose(mongoose, options);
 /* coins */
 
 const joiCoinSchema = Joi.object({
-    symbol: Joi.string().max(3).min(3).required(),
+    symbol: Joi.string().max(4).min(3).required(),
     name_coin: Joi.string().max(60).required(),
     block_explorer: Joi.string().required(),
     block_explorer_test: Joi.string().required(),

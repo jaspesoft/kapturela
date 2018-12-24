@@ -9,7 +9,7 @@ const joigoose = Joigoose(mongoose, options);
 const joiAccountSchema = Joi.object({
     seed: Joi.string().required(),
     created_at: Joi.date().required(),
-    user: Joi.string().alphanum().required(),
+    user_id: Joi.string().alphanum().required(),
 });
 export const AccountSchema = new mongoose.Schema(joigoose.convert(joiAccountSchema));
 
@@ -62,11 +62,14 @@ export const UnspentAddressSchema = new mongoose.Schema(joigoose.convert(joiUnsp
 
 /* wal_withdrawal_request */
 const joiWithdrawalRequestSchema = Joi.object({
+    coin: Joi.string().required(),
     amount: Joi.number().positive().required(),
     address: Joi.string().required(),
-    validation_code: Joi.string().required(),
+    validation_code: Joi.string(),
+    concept: Joi.string().required(),
     status: Joi.string().max(1).default('P').required(),
     created_at: Joi.date().default(Date.now()),
+    user_id: Joi.string().required(),
     expires_at: Joi.date(),
 });
 export const WithdrawalRequestSchema = new mongoose.Schema(joigoose.convert(joiWithdrawalRequestSchema));

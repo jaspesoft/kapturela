@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface cy_coins extends Document{
+export interface cy_coins extends Document {
     readonly symbol: string;
     readonly name_coin: string;
     readonly block_explorer: string;

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import {createHmac} from 'crypto';
 
 @Injectable()
 export class GeneralService {
@@ -10,5 +11,8 @@ export class GeneralService {
           result = result + chars[Math.floor(Math.random() * chars.length)];
         }
         return result.replace('undefined', '');
+    }
+    public async makePassword(pass: string): Promise<string> {
+        return createHmac('sha256', pass).digest('hex');
     }
 }

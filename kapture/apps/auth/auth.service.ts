@@ -5,7 +5,9 @@ import {GeneralService} from '../../shared/services/general.service';
 
 @Injectable()
 export class AuthService {
-  private _functions: GeneralService;
+  // tslint:disable-next-line:variable-name
+  private _functions = new GeneralService();
+
   constructor(private readonly usersService: SettingsService) {}
 
   async validateTokeApps(token: string): Promise<any> {
@@ -24,7 +26,7 @@ export class AuthService {
     return newToken;
   }
   async logIn(dataLogin: AuthLogIn): Promise<any> {
-    const passcryp = await this.usersService.makePassword(dataLogin.pass);
+    const passcryp = await this._functions.makePassword(dataLogin.pass);
     const data = await this.usersService.userModel.find({
       email: dataLogin.email,
       password: passcryp,
@@ -35,7 +37,10 @@ export class AuthService {
       return {
         status: 'ok',
         message: 'Welcome to my conexion kapture',
-        toke: newtoken,
+        user_id: data[0].id,
+        username: data[0].username,
+        email: data[0].email,
+        token: newtoken,
       };
 
     } else {

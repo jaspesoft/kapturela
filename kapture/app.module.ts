@@ -10,7 +10,6 @@ import { CoinsModule } from './apps/coins/coins.module';
 import { AuthModule } from './apps/auth/auth.module';
 import { GeneralService } from './shared/services/general.service';
 
-
 @Module({
   imports: [
     WalletsModule,

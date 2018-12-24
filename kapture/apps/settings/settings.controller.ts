@@ -9,7 +9,6 @@ export class SettingsController {
     constructor(private service: SettingsService) { }
 
     @Post('create/account/')
-    //@UseGuards(AuthGuard('bearer'))
     async createAccount(@Body() user: adm_user, @Res() res) {
         // validar que el usaurio no este registrado
         this.service.validarCreateUser(user.email, user.username)

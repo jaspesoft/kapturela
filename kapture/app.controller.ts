@@ -1,13 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import { Network } from './shared/provider/wallets/network';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private network: Network) {}
 
   @Get()
-  getHello(): string {
-    return this.network.getNetworkParams('ONX');
+  home() {
+    return { message: 'Hello world!' };
   }
 }

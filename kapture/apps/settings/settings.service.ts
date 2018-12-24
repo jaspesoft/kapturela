@@ -3,12 +3,13 @@ import { Model } from 'mongoose';
 import { adm_country, adm_user } from './models/settings.interface';
 import { wal_accounts } from '../wallets/models/wallets.interface';
 import { Wallets } from 'kapture/shared/provider/wallets/wallets';
-import * as crypto from 'crypto';
+
 import {GeneralService} from '../../shared/services/general.service';
 
 @Injectable()
 export class SettingsService {
-  private _functions: GeneralService;
+  // tslint:disable-next-line:variable-name
+  private _functions = new GeneralService();
 
   constructor(
     @Inject('UserModel') public readonly userModel: Model<adm_user>,
@@ -19,12 +20,10 @@ export class SettingsService {
   async validateUserToken(tokenValidate: string): Promise<any> {
     return this.userModel.find({token: tokenValidate });
   }
-  public async makePassword(pass: string): Promise<string> {
-    return crypto.createHmac('sha256', pass).digest('hex');
-  }
+
   async setCreateUser(user: adm_user): Promise<adm_user> {
     const newUser = new this.userModel(user);
-    await this.makePassword(user.password)
+    await this._functions.makePassword(user.password)
     .then( passEncrypt => {
       newUser.password = passEncrypt;
     });

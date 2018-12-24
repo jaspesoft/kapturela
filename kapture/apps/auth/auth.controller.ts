@@ -1,4 +1,4 @@
-import { Controller, Body, Post, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Body, Post, HttpStatus, Res, Header, Req } from '@nestjs/common';
 import { AuthLogIn } from './auth.interface';
 import { AuthService } from './auth.service';
 
@@ -8,7 +8,7 @@ export class AuthController {
     constructor(private service: AuthService) {}
 
     @Post()
-    async createAccount(@Body() login: AuthLogIn, @Res() res) {
+    async logIn(@Body() login: AuthLogIn, @Res() res, @Req() req) {
         this.service.logIn(login)
         .then( data => {
             if (data.status === 'ok') {

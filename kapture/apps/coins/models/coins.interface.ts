@@ -1,5 +1,6 @@
 import { Document } from 'mongoose';
 
+// tslint:disable-next-line:class-name
 export interface cy_coins extends Document {
     readonly symbol: string;
     readonly name_coin: string;

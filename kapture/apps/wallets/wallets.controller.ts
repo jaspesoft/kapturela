@@ -21,11 +21,11 @@ export class WalletsController {
                 return res.status(HttpStatus.EXPECTATION_FAILED).json(result);
             }
             this.service.setCreateWallet(createWallet, params.coin)
-            .then(result => {
+            .then(resul => {
                 if (result.status === 'faild') {
-                    return res.status(HttpStatus.EXPECTATION_FAILED).json(result);
+                    return res.status(HttpStatus.EXPECTATION_FAILED).json(resul);
                 }
-                return res.status(HttpStatus.OK).json(result);
+                return res.status(HttpStatus.OK).json(resul);
             });
 
         });

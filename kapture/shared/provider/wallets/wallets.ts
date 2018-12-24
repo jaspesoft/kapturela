@@ -20,6 +20,7 @@ export class Wallets {
         return Wallets.getEncrypt(generateMnemonic());
     }
 
+    // tslint:disable-next-line:variable-name
     private getPath(code_crypto: string, child: string, is_change = false, is_address = true) {
 
         if (is_change) {
@@ -57,17 +58,18 @@ export class Wallets {
         const xprvString = master.toBase58();
 
         const xpubString = fromBase58(xprvString, this.crypto_network.getNetworkParams(crypto)).derivePath(
-            this.getPath(this.crypto_network.getCodeCrypto(),'0', false, false)
+            this.getPath(this.crypto_network.getCodeCrypto(), '0', false, false),
             ).neutered().toBase58();
 
         return {
-            'xpriv': xprvString,
-            'xpub': xpubString,
-            'child': 0,
-            'address': this.getPaymentAddress(master, crypto, '0'),
+            xpriv: xprvString,
+            xpub: xpubString,
+            child: 0,
+            address: this.getPaymentAddress(master, crypto, '0'),
         };
     }
 
+    // tslint:disable-next-line:variable-name
     public getPaymentAddress(xpriv: any, crypto: string, child: string, is_change = false) {
         const x = xpriv.derivePath( this.getPath(
             this.crypto_network.getCodeCrypto(), '0', is_change),

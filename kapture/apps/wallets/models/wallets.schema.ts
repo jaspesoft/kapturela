@@ -9,7 +9,7 @@ const joigoose = Joigoose(mongoose, options);
 const joiAccountSchema = Joi.object({
     seed: Joi.string().required(),
     created_at: Joi.date().required(),
-    user: Joi.string().alphanum().required(),
+    user_id: Joi.string().alphanum().required(),
 });
 export const AccountSchema = new mongoose.Schema(joigoose.convert(joiAccountSchema));
 

@@ -5,6 +5,7 @@ import { DatabaseModule } from 'kapture/database/database.module';
 import { WalletsService } from './wallets.service';
 import {coinsProviders} from '../coins/models/coins.providers';
 import { settingsProviders } from '../settings/models/settings.providers';
+import { Wallets } from 'kapture/shared/provider/wallets/wallets';
 
 @Module({
   controllers: [WalletsController],
@@ -16,6 +17,7 @@ import { settingsProviders } from '../settings/models/settings.providers';
       WalletsService,
       ...coinsProviders,
       ...settingsProviders,
+      Wallets,
   ],
 })
 export class WalletsModule {}

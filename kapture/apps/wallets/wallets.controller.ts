@@ -1,7 +1,7 @@
 import {Controller, Get, HttpStatus, Res, Post, Param, Body, UseGuards, Inject} from '@nestjs/common';
 import {WalletsService} from './wallets.service';
 import {adm_user} from '../settings/models/settings.interface';
-import {wal_withdrawal_request} from './models/wallets.interface';
+import {wal_withdrawal_request, wal_wallets} from './models/wallets.interface';
 import { AuthGuard } from '@nestjs/passport';
 import { Model } from 'mongoose';
 
@@ -11,6 +11,25 @@ export class WalletsController {
         private service: WalletsService,
         @Inject('UserModel') private readonly userModel: Model<adm_user>,
     ) { }
+
+    @Post('create/:coin')
+    @UseGuards(AuthGuard('bearer'))
+    async createWallet(@Res() res, @Param() params, @Body() createWallet: wal_wallets ) {
+        this.service.getValidateCoin(params.coin)
+        .then( result => {
+            if (result.status === 'faild') {
+                return res.status(HttpStatus.EXPECTATION_FAILED).json(result);
+            }
+            this.service.setCreateWallet(createWallet, params.coin)
+            .then(result => {
+                if (result.status === 'faild') {
+                    return res.status(HttpStatus.EXPECTATION_FAILED).json(result);
+                }
+                return res.status(HttpStatus.OK).json(result);
+            });
+
+        });
+    }
 
     @Post('withdrawal/request/:coin')
     @UseGuards(AuthGuard('bearer'))

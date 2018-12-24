@@ -44,8 +44,8 @@ export class SettingsService {
   private async setCreateAccount(user: any): Promise<wal_accounts> {
     const isNow = Date.now();
     const newAccount = new this.accountModel({
-      seed: Wallets.getEncrypt(Wallets.getCreateMnemonic() + isNow),
-      user: user.id,
+      seed: Wallets.getCreateMnemonic(),
+      user_id: user.id,
       created_at: isNow,
     });
     await newAccount.validate();
